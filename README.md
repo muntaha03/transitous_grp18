@@ -50,4 +50,17 @@ At a high level:
 
 This configuration is what Transitous uses to know where to download data from and which areas it can route in.
 
+## Continuous integration & deployment
+
+This repository uses GitHub Actions to automate testing and deployment through the **SME Continuous Integration** workflow.
+
+### **Workflow details**
+- **Trigger**: The pipeline is automatically initiated on every `push` or `sync` to the `main` branch.
+- Upon successful testing a `deployment-package` is generated as a build artifact.
+
+### **How to monitor**
+1. Navigate to the **Actions** tab in the GitHub repository.
+2. Select the latest run titled **"SME Continuous Integration"**.
+3. Verify the **build and test** and **deploy-artifact** jobs have successfully completed.
+
 For detailed examples of region files and all supported source types, see the documentation on the  [Project Website](https://transitous.org/doc/#adding-a-region).
