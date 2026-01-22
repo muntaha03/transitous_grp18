@@ -1,0 +1,40 @@
+name: SME Continuous Integration
+
+on: [push]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run Auto URL Testing
+        run: |
+          #executes test_feed.py
+          python -m unittest discover -s tests -p "test_feed.py"
+
+  deploy-artifact:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Deployment Package
+        run: zip -r transitous-evolution.zip . -x "*.git*"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-package
+          path: transitous-evolution.zip
